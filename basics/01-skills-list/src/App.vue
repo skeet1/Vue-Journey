@@ -1,47 +1,53 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script>
+  export default {
+    data() {
+      return {
+        header: "Skills List",
+        newSkill: "",
+        skills: [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "Vue",
+          "PHP",
+          "Laravel",
+          "MySQL",
+        ]
+      }
+    },
+    methods: {
+      addNewSkill() {
+        this.skills.push(this.newSkill);
+        this.newSkill = "";
+      }
+    }
+  }
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
   <main>
-    <TheWelcome />
+    <h1 class="text-center text-2xl font-semibold tracking-wider ">{{header}}</h1>
+    <div>
+      <h2 class="text-xl text-center font-semibold text-blue-500 capitalize " v-if="skills.length % 2 === 0">my skills : (even number btw)</h2>
+      <h2 class="text-xl text-center font-semibold text-blue-500 capitalize " v-else>My skills : (odd number btw)</h2>
+      <ul class=" bg-slate-800 my-4 text-slate-100 rounded-md">
+        <li v-for="(skill, index) in skills" class="p-2 text-sm font-bold tracking-wider 
+          hover:text-blue-500 transition ease-in-out" :key="index">
+          {{skill}}
+        </li>
+      </ul>
+    </div>
+    <div class="add-skill">
+      <input type="text" placeholder="Add a skill" v-model="newSkill"
+        class="block w-full p-2 bg-transparent border-2 border-slate-800  rounded-md
+        focus:outline-none focus:border-blue-500 transition ease-in-out"
+      />
+      <button @click="addNewSkill" 
+        class="block w-full p-2 mt-2 bg-blue-500 text-slate-100 font-semibold rounded-md"
+      >Add</button>
+    </div>
+    <hr />
+    <p style="font-size: .7rem; font-style: italic;" class="text-xs font-semibold text-orange-500 text-center capitalize hover:italic" v-if="newSkill.length"> hey you want add this new skill : {{newSkill}}</p>
+    <p style="font-size: .7rem; font-style: italic;" class="text-xs font-semibold text-orange-500 text-center capitalize hover:italic" v-else >there is no new skill to add</p>
   </main>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
